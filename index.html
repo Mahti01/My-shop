@@ -1,8 +1,8 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#4d3a2f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><title>Мой Магазин V46 — Supermarket</title><style>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#4d3a2f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><title>Мой Магазин V47 — Living Supermarket</title><style>
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:Inter,Arial,sans-serif;background:#b8d4e4;color:#263238}
 button{font-family:inherit;cursor:pointer;border:0;-webkit-tap-highlight-color:transparent}
-#game{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;background:#b8d4e4}
+#game{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;background:#b8d4e4touch-action:none;cursor:grab;}
 
 .top{position:fixed;left:12px;right:12px;top:10px;display:flex;align-items:flex-start;gap:8px;z-index:10;pointer-events:none}
 .brand{background:rgba(255,255,250,.94);color:#30352f;border:1px solid rgba(70,80,60,.08);border-radius:20px;padding:9px 12px;min-width:176px;box-shadow:0 8px 22px rgba(45,65,50,.16)}
@@ -85,7 +85,7 @@ s.city=Object.assign({location:'center',unlockedLocations:['center'],secondStore
 s.city.unlockedLocations=Array.isArray(s.city.unlockedLocations)?s.city.unlockedLocations:['center'];
 s.city.competitors=Array.isArray(s.city.competitors)?s.city.competitors:[];
 s.placed=Array.isArray(s.placed)?s.placed:[];if(!s.placed.length)s.placed=[{id:'checkout-main',type:'checkout',x:575,y:330}];
-function load(){try{const old=JSON.parse(localStorage.getItem('myshop_v46')||localStorage.getItem('myshop_v45')||localStorage.getItem('myshop_v44')||localStorage.getItem('myshop_v43')||localStorage.getItem('myshop_v42')||localStorage.getItem('myshop_v41')||localStorage.getItem('myshop_v40')||localStorage.getItem('myshop_v39')||localStorage.getItem('myshop_v38')||localStorage.getItem('myshop_v37')||localStorage.getItem('myshop_v36')||localStorage.getItem('myshop_v35')||localStorage.getItem('myshop_v34')||localStorage.getItem('myshop_v32')||localStorage.getItem('myshop_v31')||localStorage.getItem('myshop_v30')||localStorage.getItem('myshop_v29')||localStorage.getItem('myshop_v28')||localStorage.getItem('myshop_v25')||localStorage.getItem('myshop_v23')||'null');const x=Object.assign({},defaults,old||{});x.staff=Object.assign({},defaults.staff,old?.staff||{});x.staffXP=Object.assign({},defaults.staffXP,old?.staffXP||{});x.staffSalary=Object.assign({},defaults.staffSalary,old?.staffSalary||{});x.shopUpgrades=Object.assign({},defaults.shopUpgrades,old?.shopUpgrades||{});x.cleanliness=Number(old?.cleanliness??92);x.staffState=Object.assign({},defaults.staffState,old?.staffState||{});x.warehouse=(old?.warehouse?.length===6?old.warehouse:defaults.warehouse.slice());x.shelf=(old?.shelf?.length===6?old.shelf:defaults.shelf.slice());x.prices=old?.prices?.length===6?old.prices.slice():defaults.prices.slice();x.salesByProduct=old?.salesByProduct?.length===6?old.salesByProduct.slice():defaults.salesByProduct.slice();x.purchaseCosts=old?.purchaseCosts?.length===6?old.purchaseCosts.slice():defaults.purchaseCosts.slice();x.costTrend=old?.costTrend?.length===6?old.costTrend.slice():defaults.costTrend.slice();x.promo=old?.promo?.length===6?old.promo.slice():defaults.promo.slice();x.warehouseCap=Number(old?.warehouseCap||120);x.shopLevel=Number(old?.shopLevel||1);x.dailyGoal=Number(old?.dailyGoal||3500);x.events=Array.isArray(old?.events)?old.events:[];x.orders=Number(old?.orders||0);x.stockouts=Number(old?.stockouts||0);x.avgCheck=Number(old?.avgCheck||0);return x}catch(e){return Object.assign({},defaults)}}function save(){localStorage.setItem('myshop_v46',JSON.stringify(s))}function money(n){return Math.round(n).toLocaleString('ru-RU')+' ₽'}function toast(t){const e=document.getElementById('toast');e.textContent=t;e.classList.add('show');clearTimeout(window.tt);window.tt=setTimeout(()=>e.classList.remove('show'),1600)}
+function load(){try{const old=JSON.parse(localStorage.getItem('myshop_v47')||localStorage.getItem('myshop_v46')||localStorage.getItem('myshop_v45')||localStorage.getItem('myshop_v44')||localStorage.getItem('myshop_v43')||localStorage.getItem('myshop_v42')||localStorage.getItem('myshop_v41')||localStorage.getItem('myshop_v40')||localStorage.getItem('myshop_v39')||localStorage.getItem('myshop_v38')||localStorage.getItem('myshop_v37')||localStorage.getItem('myshop_v36')||localStorage.getItem('myshop_v35')||localStorage.getItem('myshop_v34')||localStorage.getItem('myshop_v32')||localStorage.getItem('myshop_v31')||localStorage.getItem('myshop_v30')||localStorage.getItem('myshop_v29')||localStorage.getItem('myshop_v28')||localStorage.getItem('myshop_v25')||localStorage.getItem('myshop_v23')||'null');const x=Object.assign({},defaults,old||{});x.staff=Object.assign({},defaults.staff,old?.staff||{});x.staffXP=Object.assign({},defaults.staffXP,old?.staffXP||{});x.staffSalary=Object.assign({},defaults.staffSalary,old?.staffSalary||{});x.shopUpgrades=Object.assign({},defaults.shopUpgrades,old?.shopUpgrades||{});x.cleanliness=Number(old?.cleanliness??92);x.staffState=Object.assign({},defaults.staffState,old?.staffState||{});x.warehouse=(old?.warehouse?.length===6?old.warehouse:defaults.warehouse.slice());x.shelf=(old?.shelf?.length===6?old.shelf:defaults.shelf.slice());x.prices=old?.prices?.length===6?old.prices.slice():defaults.prices.slice();x.salesByProduct=old?.salesByProduct?.length===6?old.salesByProduct.slice():defaults.salesByProduct.slice();x.purchaseCosts=old?.purchaseCosts?.length===6?old.purchaseCosts.slice():defaults.purchaseCosts.slice();x.costTrend=old?.costTrend?.length===6?old.costTrend.slice():defaults.costTrend.slice();x.promo=old?.promo?.length===6?old.promo.slice():defaults.promo.slice();x.warehouseCap=Number(old?.warehouseCap||120);x.shopLevel=Number(old?.shopLevel||1);x.dailyGoal=Number(old?.dailyGoal||3500);x.events=Array.isArray(old?.events)?old.events:[];x.orders=Number(old?.orders||0);x.stockouts=Number(old?.stockouts||0);x.avgCheck=Number(old?.avgCheck||0);return x}catch(e){return Object.assign({},defaults)}}function save(){localStorage.setItem('myshop_v47',JSON.stringify(s))}function money(n){return Math.round(n).toLocaleString('ru-RU')+' ₽'}function toast(t){const e=document.getElementById('toast');e.textContent=t;e.classList.add('show');clearTimeout(window.tt);window.tt=setTimeout(()=>e.classList.remove('show'),1600)}
 const suppliers={fast:{name:'Быстрый',mult:1.12,time:4,fee:650,desc:'Дороже, но товар приходит быстро.'},standard:{name:'Стандарт',mult:1,time:7,fee:900,desc:'Баланс цены и скорости.'},bulk:{name:'Опт',mult:.88,time:11,fee:1300,desc:'Дешевле, но доставка дольше.'}};
 function supplierCost(i){const sp=suppliers[s.supplier]||suppliers.standard;return Math.round(products[i][1]*sp.mult*(1+(s.costTrend[i]||0)/100))}function effectivePrice(i){return Math.max(1,Math.round(s.prices[i]*(1-(s.promo[i]||0)/100)))}function demand(i){const base=[1.05,.95,.85,.72,.9,1.1][i];const market=products[i][2];const priceRatio=s.prices[i]/market;const pricePenalty=priceRatio<=1?1+Math.min(.18,(1-priceRatio)*.45):Math.max(.35,1-(priceRatio-1)*1.05);const stock=s.shelf[i]>0?1:(s.warehouse[i]>0?.45:0);const promoBoost=s.promo[i]?1.22:1;return Math.max(0,Math.min(1.45,base*pricePenalty*promoBoost*stock))}function recPrice(i){return Math.max(products[i][1]+5,Math.round(supplierCost(i)*2.05*(demand(i)>.95?1.04:.96)))}
 function spawn(){if(s.paused||s.customers.length>=11)return;const available=products.map((p,i)=>s.shelf[i]>0?i:-1).filter(i=>i>=0);if(!available.length)return;const t=types[Math.floor(Math.random()*types.length)];const prod=available[Math.floor(Math.random()*available.length)];const patience=t[0]==='Экономный'?34:t[0]==='Состоятельный'?24:t[0]==='Семья'?42:30;const preferred=Math.floor(Math.random()*products.length);s.visitors++;s.dayVisitors++;s.customers.push({id:Math.random(),x:65,y:390,tx:190+Math.random()*240,ty:300+Math.random()*110,state:'enter',type:t[0],mult:t[1],budget:t[2],accept:t[3],target:t[4],prod,cart:[],wait:0,anim:0,basket:Math.random()<.55,patience,preferred,satisfaction:100,reason:''});}
@@ -152,6 +152,7 @@ function draw(){
   ctx.setTransform(DPR,0,0,DPR,0,0);ctx.clearRect(0,0,W,H);
   const sc=Math.min(W/1000,H/760),ox=(W-1000*sc)/2,oy=(H-760*sc)/2;
   ctx.save();ctx.translate(ox,oy);ctx.scale(sc,sc);
+  ctx.translate(500+camX,380+camY);ctx.scale(camZoom,camZoom);ctx.translate(-500,-380);
 
   const poly=(p,f,s)=>{ctx.beginPath();p.forEach((q,i)=>i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]));ctx.closePath();ctx.fillStyle=f;ctx.fill();if(s){ctx.strokeStyle=s;ctx.lineWidth=1.5;ctx.stroke()}};
   const rr=(x,y,w,h,r,f,s)=>{ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fillStyle=f;ctx.fill();if(s){ctx.strokeStyle=s;ctx.lineWidth=1.5;ctx.stroke()}};
@@ -262,6 +263,33 @@ function draw(){
   for(const [x,y] of [[300,355],[870,350],[330,470]]){shadow(x,y+22,13,3);ctx.fillStyle='#795d47';ctx.fillRect(x-3,y,6,21);ctx.fillStyle='#5e9660';ctx.beginPath();ctx.arc(x,y-3,13,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(x-8,y-8,8,0,Math.PI*2);ctx.fill()}
   for(const [x,y] of [[315,500],[875,455]]){rr(x-9,y,18,17,3,'#719c75','#577c5b');txt('♻',x,y+13,10,'#fff','900')}
 
+  // premium detail pass: aisle headers, product rows, lights, signs and small props
+  for(const [x,y,label,col] of [[462,212,'НАПИТКИ','#4b91a5'],[615,192,'СЛАДОСТИ','#d58b45'],[755,218,'БАКАЛЕЯ','#6d995f'],[470,298,'МОЛОЧНОЕ','#78a9ad'],[635,278,'МЯСО','#b66d65'],[790,294,'ТОВАРЫ','#8d72a7']]){
+    rr(x-43,y-10,86,17,5,col,'rgba(255,255,255,.45)');txt(label,x,y+2,6,'#fff','950');
+  }
+  // product labels and price tags
+  for(const [x,y,price] of [[430,246,'69'],[465,246,'89'],[505,246,'119'],[585,226,'129'],[620,226,'149'],[665,226,'199'],[725,251,'59'],[765,251,'99'],[805,251,'129']]){
+    rr(x-9,y,18,10,3,'#fffdf7','#d9d0c3');txt(price,x,y+8,5,'#5b655d','950');
+  }
+  // shopping carts with baskets
+  for(const [x,y] of [[350,450],[570,350],[720,365],[820,455]]){
+    ctx.strokeStyle='#8a918d';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+18,y);ctx.lineTo(x+15,y+11);ctx.lineTo(x+3,y+11);ctx.closePath();ctx.stroke();
+    ctx.beginPath();ctx.arc(x+4,y+15,2.5,0,Math.PI*2);ctx.arc(x+14,y+15,2.5,0,Math.PI*2);ctx.stroke();
+  }
+  // ceiling lights / warm highlights
+  for(const [x,y] of [[350,176],[500,162],[650,150],[800,170]]){
+    rr(x-15,y,30,5,2,'#fffdf2','#d9d4c9');ctx.fillStyle='rgba(255,235,170,.24)';ctx.beginPath();ctx.ellipse(x,y+16,24,9,0,0,Math.PI*2);ctx.fill();
+  }
+  // small service counter and coffee display
+  rr(815,245,58,8,3,'#c79b70','#9f7653');
+  for(let k=0;k<3;k++){ctx.fillStyle=['#d98b52','#8fbd68','#d75f58'][k];ctx.beginPath();ctx.arc(825+k*16,241,4,0,Math.PI*2);ctx.fill();}
+  // wall posters
+  rr(255,205,55,36,4,'#f7f0dd','#d5c6aa');txt('FRESH',282,220,7,'#4f8c57','950');txt('TODAY',282,232,6,'#9b7650','900');
+  rr(310,205,55,36,4,'#eef5ee','#c5d3c8');txt('−20%',337,225,12,'#d85f50','950');
+  // entry mat and baskets
+  poly([[820,575],[885,540],[902,549],[836,585]],'#596f69','#465650');
+  for(let k=0;k<5;k++){rr(760+k*16,570-k*3,10,9,2,'#d39b57','#a97945');}
+  
   // active customers/staff
   if(s.staffState){
     person(s.staffState.cashier.x*.48+445,s.staffState.cashier.y*.33+500,'#bd5d68');
@@ -276,6 +304,7 @@ function draw(){
   // tiny shopping carts
   for(const [x,y] of [[350,450],[570,350],[720,365]]){ctx.strokeStyle='#8e9791';ctx.lineWidth=2;ctx.strokeRect(x,y,17,12);ctx.beginPath();ctx.arc(x+3,y+15,2,0,Math.PI*2);ctx.arc(x+14,y+15,2,0,Math.PI*2);ctx.stroke()}
 
+  ctx.restore();ctx.save();ctx.setTransform(DPR,0,0,DPR,0,0);
   // compact game HUD
   rr(20,18,210,60,16,'rgba(255,255,250,.96)');
   txt('ДЕНЬ '+s.day,35,39,12,'#4f5d54','950','left');
@@ -287,6 +316,11 @@ function draw(){
   txt('МАГАЗИН ОТКРЫТ',790,40,10,'#39744d','950','left');
   txt('Покупатели '+s.visitors+' • Очередь '+s.queue.length,790,59,8,'#68756c','800','left');
 
+  // camera controls
+  rr(24,665,175,28,14,'rgba(255,255,250,.92)');
+  txt('↔ Двигать   pinch / колесо — масштаб',111,684,7,'#65736b','900');
+  rr(805,665,95,28,14,'rgba(255,255,250,.92)');
+  txt('⟳ Камера',852,684,8,'#39744d','950');
   // bottom navigation
   rr(150,700,700,48,22,'rgba(255,255,250,.97)');
   const nav=[['🏪','Магазин'],['📦','Склад'],['🛒','Закупка'],['👥','Персонал'],['📈','Развитие']];
@@ -327,11 +361,46 @@ function drawZone(k){
   txt(unlocked?z.desc:'Открыть за '+money(z.cost),z.x+z.w/2,z.y+44,9,unlocked?'#fff3d5':'#ead7c0','600','center');
 }
 function handleCanvasTap(e){
-  const r=canvas.getBoundingClientRect(),sc=Math.min(W/900,H/600),ox=(W-900*sc)/2,oy=0;
-  const x=(e.clientX-r.left-ox)/sc,y=(e.clientY-r.top-oy)/sc;
+  const r=canvas.getBoundingClientRect();
+  const sx=e.clientX-r.left,sy=e.clientY-r.top;
+  if(sx>805*(W/1000)&&sx<900*(W/1000)&&sy>665*(H/760)&&sy<700*(H/760)){resetCamera();return}
+  const p=screenToWorld(e.clientX,e.clientY),x=p.x,y=p.y;
   for(const k of Object.keys(zoneDefs)){const z=zoneDefs[k];if(x>=z.x&&x<=z.x+z.w&&y>=z.y&&y<=z.y+z.h){if(!zoneUnlocked(k))buyZone(k);else toast(z.name+' уже работает');return}}
 }
-canvas.addEventListener('pointerdown',handleCanvasTap,{passive:true});
+function pointerDown(e){
+  canvas.setPointerCapture?.(e.pointerId);
+  camPointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  camMoved=false;
+  if(camPointers.size===1){camDrag={x:e.clientX,y:e.clientY,cx:camX,cy:camY};}
+  else if(camPointers.size===2){camPinchStart=cameraDistance();camZoomStart=camZoom;camDrag=null;}
+}
+function pointerMove(e){
+  if(!camPointers.has(e.pointerId))return;
+  camPointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(camPointers.size===1&&camDrag){
+    const dx=e.clientX-camDrag.x,dy=e.clientY-camDrag.y;
+    if(Math.hypot(dx,dy)>8)camMoved=true;
+    const base=Math.min(W/1000,H/760);
+    camX=camDrag.cx+dx/base;camY=camDrag.cy+dy/base;clampCamera();
+  }else if(camPointers.size>=2){
+    camMoved=true;
+    const d=cameraDistance();
+    if(camPinchStart)camZoom=camZoomStart*(d/camPinchStart);
+    clampCamera();
+  }
+}
+function pointerUp(e){
+  camPointers.delete(e.pointerId);
+  if(!camMoved&&camPointers.size===0)handleCanvasTap(e);
+  if(camPointers.size===1){
+    const p=[...camPointers.values()][0];camDrag={x:p.x,y:p.y,cx:camX,cy:camY};
+  }else camDrag=null;
+}
+canvas.addEventListener('pointerdown',pointerDown,{passive:true});
+canvas.addEventListener('pointermove',pointerMove,{passive:true});
+canvas.addEventListener('pointerup',pointerUp,{passive:true});
+canvas.addEventListener('pointercancel',pointerUp,{passive:true});
+canvas.addEventListener('wheel',e=>{e.preventDefault();camZoom*=e.deltaY<0?1.08:.925;clampCamera()},{passive:false});
 
 
 const equipmentDefs={
@@ -642,7 +711,7 @@ function openPanel(id){
    html=`<h2>⚙️ Настройки</h2><div class="grid">
    <div class="item"><b>Сохранение</b><small>Прогресс хранится на этом устройстве в localStorage.</small><button onclick="saveNow()">💾 Сохранить сейчас</button></div>
    <div class="item"><b>Новый тест</b><small>Полностью сбросит текущий прогресс и начнёт игру заново.</small><button onclick="resetGame()">↻ Сбросить прогресс</button></div>
-   <div class="item"><b>V46 — SUPERMARKET</b><small>Живая сцена магазина: оборудование, покупатели, персонал и развитие.</small></div>
+   <div class="item"><b>V47 — LIVING SUPERMARKET</b><small>Живая сцена магазина: оборудование, покупатели, персонал и развитие.</small></div>
    <div class="item"><b>Текущий день</b><small>День ${s.day} • Выручка ${money(s.dayRevenue)} • Продажи ${s.daySales}</small><button onclick="endDay()">🌙 Завершить день</button></div>
    </div>`;
  }else if(id==='products'){
