@@ -77,22 +77,22 @@ function shelf(x,y,w,h,label,idx){
 }
 function plant(x,y){ctx.save();ctx.fillStyle='#d7c8b6';ctx.beginPath();ctx.roundRect(x-14,y,28,24,7);ctx.fill();ctx.fillStyle='#6fa36d';for(let i=0;i<7;i++){ctx.beginPath();ctx.ellipse(x+(i%2?7:-7),y-8-i*2,8-i*.5,15-i,0,0,Math.PI*2);ctx.fill()}ctx.restore();}
 function draw(){
- ctx.clearRect(0,0,W,H);const sc=Math.min(W/900,H/600),ox=(W-900*sc)/2,oy=48;ctx.save();ctx.translate(ox,oy);ctx.scale(sc,sc);
+ ctx.clearRect(0,0,W,H);const sc=Math.min(W/900,H/600),ox=(W-900*sc)/2,oy=48;ctx.save();ctx.translate(ox,oy);ctx.scale(sc,sc);const pulse=(Math.sin(performance.now()/500)+1)/2;
  const g=ctx.createLinearGradient(0,0,0,545);g.addColorStop(0,'#e9eef2');g.addColorStop(1,'#cfd7de');ctx.fillStyle=g;ctx.fillRect(0,0,900,545);
  ctx.fillStyle='#b98f69';ctx.beginPath();ctx.moveTo(0,300);ctx.lineTo(900,300);ctx.lineTo(900,545);ctx.lineTo(0,545);ctx.closePath();ctx.fill();
  ctx.strokeStyle='rgba(72,55,43,.16)';ctx.lineWidth=2;for(let y=330;y<545;y+=32){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(900,y);ctx.stroke()}for(let x=0;x<=900;x+=75){ctx.beginPath();ctx.moveTo(450,300);ctx.lineTo(x,545);ctx.stroke()}
  round(32,48,836,268,16,'#f5f7f8');round(52,68,220,92,12,'#d9e6ea');round(286,68,220,92,12,'#d9e6ea');round(520,68,330,92,12,'#d9e6ea');ctx.fillStyle='#a8c5ce';ctx.fillRect(62,78,200,72);ctx.fillRect(296,78,200,72);ctx.fillRect(530,78,310,72);
  for(let x=70;x<840;x+=45){ctx.fillStyle='rgba(255,255,255,.35)';ctx.fillRect(x,82,20,64)}
- round(250,164,400,74,16,'#1f2b38');txt('МОЙ МАГАЗИН',450,196,27,'#fff','900','center');txt('ВСЁ НУЖНОЕ — РЯДОМ',450,218,10,'#f4c45d','800','center');
- round(730,245,115,72,10,'#5e7d87');round(742,253,48,64,6,'#b9d5d9');round(795,253,40,64,6,'#b9d5d9');txt('ВХОД',788,337,9,'#fff','900','center');
+ round(250,164,400,74,16,'#1f2b38');ctx.fillStyle='rgba(244,196,93,'+(0.08+0.08*pulse)+')';ctx.beginPath();ctx.roundRect(260,174,380,54,12);ctx.fill();txt('МОЙ МАГАЗИН',450,196,27,'#fff','900','center');txt('ВСЁ НУЖНОЕ — РЯДОМ',450,218,10,'#f4c45d','800','center');
+ round(730,245,115,72,10,'#5e7d87');ctx.fillStyle='rgba(244,196,93,'+(0.35+0.2*pulse)+')';ctx.beginPath();ctx.arc(845,254,4,0,Math.PI*2);ctx.fill();round(742,253,48,64,6,'#b9d5d9');round(795,253,40,64,6,'#b9d5d9');txt('ВХОД',788,337,9,'#fff','900','center');
  shelf(75,220,175,112,'СНЕКИ',0);shelf(292,210,175,112,'НАПИТКИ',1);shelf(509,220,175,112,'БАКАЛЕЯ',2);shelf(292,354,175,88,'ТОВАРЫ',3);
  round(505,420,205,65,13,'#293846');round(517,410,181,18,8,'#e7c99e');txt('КАССА',608,456,15,'#fff','900','center');round(648,381,42,30,6,'#17212b');round(653,386,32,13,3,'#8fe2aa');txt('CARD',669,406,6,'#fff','900','center');
  round(740,360,125,112,12,'#8c6a4f');txt('СКЛАД',802,383,11,'#fff','900','center');for(let i=0;i<6;i++){round(755+(i%2)*52,393+Math.floor(i/2)*24,40,18,4,'#c59a68');txt('×'+Math.min(99,s.warehouse[i%6]),775+(i%2)*52,406+Math.floor(i/2)*24,8,'#3b2b20','900','center')}
- plant(54,383);plant(700,180);plant(230,455);
+ plant(54,383);plant(700,180);plant(230,455);drawEquipment();
  if(s.deliveries.length){round(18,468,118,38,10,'#263b50');txt('🚚 Поставка '+Math.ceil(s.deliveries[0].time)+'с',77,492,10,'#fff','900','center')}
  if(s.staffState){drawStaff(s.staffState.seller,'seller');drawStaff(s.staffState.cashier,'cashier');if(s.staff.cleaner)drawStaff(s.staffState.cleaner,'cleaner')}
- for(const c of s.customers){drawChar(c);if(c.state==='shelf'||c.state==='inspect'){round(c.x+16,c.y-57,68,21,8,'#fff');txt(products[c.prod][3]+' '+effectivePrice(c.prod),c.x+50,c.y-43,8,'#26323e','900','center')}if(c.state==='queue')txt(c.cart.map(i=>products[i][3]).join(''),c.x+28,c.y-51,14,'#fff','900','center')}
- round(22,505,856,27,13,'#1f2b38');txt('ПОСЕТИТЕЛИ '+s.visitors,42,523,9,'#fff','900');txt('ПРОДАЖИ '+s.sales,165,523,9,'#fff','900');txt('ОЧЕРЕДЬ '+s.queue.length,280,523,9,'#fff','900');txt('ПОЛКИ '+s.shelf.reduce((a,b)=>a+b,0),405,523,9,'#fff','900');txt('СКЛАД '+s.warehouse.reduce((a,b)=>a+b,0)+'/'+s.warehouseCap,530,523,9,'#fff','900');txt('⭐ '+s.reputation.toFixed(1),670,523,9,'#f4c45d','900');txt('🧹 '+Math.round(s.cleanliness)+'%',750,523,9,'#a9d79e','900');
+ for(const c of s.customers){c.anim=(c.anim||0)+0.06;const oldY=c.y;c.y+=Math.sin(c.anim*4)*0.8;drawChar(c);c.y=oldY;if(c.state==='shelf'||c.state==='inspect'){round(c.x+16,c.y-57,68,21,8,'#fff');txt(products[c.prod][3]+' '+effectivePrice(c.prod),c.x+50,c.y-43,8,'#26323e','900','center')}if(c.state==='queue')txt(c.cart.map(i=>products[i][3]).join(''),c.x+28,c.y-51,14,'#fff','900','center')}
+ round(22,505,856,27,13,'#1f2b38');ctx.fillStyle='#f4c45d';ctx.fillRect(22,505,Math.min(856,856*(Math.min(1,s.dayRevenue/Math.max(1,s.dailyGoal)))),3);txt('ПОСЕТИТЕЛИ '+s.visitors,42,523,9,'#fff','900');txt('ПРОДАЖИ '+s.sales,165,523,9,'#fff','900');txt('ОЧЕРЕДЬ '+s.queue.length,280,523,9,'#fff','900');txt('ПОЛКИ '+s.shelf.reduce((a,b)=>a+b,0),405,523,9,'#fff','900');txt('СКЛАД '+s.warehouse.reduce((a,b)=>a+b,0)+'/'+s.warehouseCap,530,523,9,'#fff','900');txt('⭐ '+s.reputation.toFixed(1),670,523,9,'#f4c45d','900');txt('🧹 '+Math.round(s.cleanliness)+'%',750,523,9,'#a9d79e','900');
  ctx.restore();
 }
 const zoneDefs={
@@ -164,13 +164,23 @@ function removeEquipment(id){
   s.placed=s.placed.filter(x=>x.id!==id);save();openPanel('builder');toast('Оборудование убрано');
 }
 function drawEquipment(){
-  for(const p of s.placed){
-    const d=equipmentDefs[p.type];if(!d)continue;
-    round(p.x,p.y,d.w,d.h,8,p.type==='checkout'?'#79513d':p.type==='fridge'?'#78a8bd':p.type==='shelf'?'#a8734e':'#8a6a54');
-    txt(d.icon,p.x+d.w/2,p.y+20,18,'#fff','800','center');
-    txt(d.name,p.x+d.w/2,p.y+d.h-7,8,'#fff','800','center');
+ for(const p of s.placed||[]){
+  const d=equipmentDefs[p.type];if(!d)continue;
+  ctx.save();ctx.translate(p.x,p.y);
+  ctx.fillStyle='rgba(0,0,0,.16)';ctx.beginPath();ctx.ellipse(d.w/2,d.h+5,d.w*.42,5,0,0,Math.PI*2);ctx.fill();
+  if(p.type==='checkout'){
+    round(0,0,d.w,d.h,9,'#293846');round(5,-8,d.w-10,13,6,'#e6c99f');round(d.w-42,8,32,22,5,'#17212b');round(d.w-37,12,22,9,3,'#8fe2aa');txt('КАССА',d.w/2,d.h-6,8,'#fff','900','center');
+  }else if(p.type==='shelf'){
+    round(0,0,d.w,d.h,7,'#f3f5f7');round(0,0,d.w,7,5,'#334252');for(let r=0;r<2;r++){ctx.fillStyle='#b8c2cb';ctx.fillRect(6,22+r*22,d.w-12,3);for(let k=0;k<5;k++)round(11+k*15,9+r*22,10,13,2,['#e3a65f','#d96f6f','#78a6c4','#d2bd68','#81ad79'][k%5]);}
+  }else if(p.type==='fridge'){
+    round(0,0,d.w,d.h,7,'#83b1c1');round(5,7,d.w-10,d.h-13,5,'#d7edf2');ctx.fillStyle='#9ebbc4';ctx.fillRect(d.w/2-2,9,4,d.h-17);txt('❄',d.w/2,27,16,'#4b7482','900','center');
+  }else{
+    round(0,0,d.w,d.h,8,p.type==='bakeryOven'?'#a56f4c':p.type==='coffeeMachine'?'#75554a':'#729b69');txt(d.icon,d.w/2,22,18,'#fff','900','center');txt(d.name,d.w/2,d.h-7,7,'#fff','900','center');
   }
+  ctx.restore();
+ }
 }
+
 function openBuilder(){openPanel('builder')}
 function placeFromMap(type){
   if(type==='checkout' || equipCount(type)>0){buyEquipment(type);return}
