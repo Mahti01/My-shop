@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#665cf6">
+<link rel="manifest" href="manifest.webmanifest">
+<title>ShiftFlow — тестовый прототип</title>
+<style>
+:root{
+ --bg:#f5f6f8;--card:#fff;--text:#17181b;--muted:#70747c;--line:#e7e8ec;
+ --accent:#665cf6;--accent2:#eeeaff;--green:#198754;--red:#d94b5b;--orange:#d98920;
+ --shadow:0 8px 28px rgba(20,22,30,.08);--r:18px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;width:100%;height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",sans-serif}
+body{overflow:hidden}
+button,input,select,textarea{font:inherit;color:var(--text);-webkit-text-fill-color:var(--text)}
+button{border:0;cursor:pointer;touch-action:manipulation}
+.app{height:100dvh;display:flex;flex-direction:column;max-width:620px;margin:auto;background:var(--bg)}
+header{padding:calc(env(safe-area-inset-top) + 14px) 18px 12px;background:var(--bg);position:relative;z-index:5}
+.brand{font-size:23px;font-weight:800;letter-spacing:-.5px}.sub{font-size:13px;color:var(--muted);margin-top:3px}
+#screen{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;padding:0 16px 110px}
+.view{display:none;animation:in .15s ease}.view.active{display:block}
+@keyframes in{from{opacity:.3;transform:translateY(4px)}to{opacity:1;transform:none}}
+h1{font-size:27px;letter-spacing:-.6px;margin:8px 0 18px}.h2{font-size:18px;font-weight:800;margin:22px 0 10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:12px;box-shadow:var(--shadow)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px}.muted{color:var(--muted)}.small{font-size:12px}.money{font-weight:800}.green{color:var(--green)}.red{color:var(--red)}.orange{color:var(--orange)}
+.btn{min-height:46px;padding:0 16px;border-radius:14px;background:#17181b;color:#fff;-webkit-text-fill-color:#fff;font-weight:750;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn.secondary{background:var(--accent2);color:var(--accent);-webkit-text-fill-color:var(--accent)}
+.btn.ghost{background:#f0f1f4;color:var(--text);-webkit-text-fill-color:var(--text)}
+.btn.danger{background:#fff0f2;color:var(--red);-webkit-text-fill-color:var(--red)}
+.btn.full{width:100%}.btn:active{transform:scale(.98)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric{padding:15px;border-radius:16px;background:#fff;border:1px solid var(--line)}.metric b{display:block;font-size:21px;margin-top:5px}
+.chips{display:flex;gap:8px;overflow:auto;padding:2px 0 6px}.chip{white-space:nowrap;padding:9px 13px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:13px;font-weight:700}.chip.active{background:var(--accent);color:#fff;-webkit-text-fill-color:#fff;border-color:var(--accent)}
+.calendar-head{display:flex;align-items:center;justify-content:space-between;margin:0 0 10px}.month{font-size:20px;font-weight:800}.arrows{display:flex;gap:7px}.iconbtn{width:42px;height:42px;border-radius:13px;background:#fff;border:1px solid var(--line);font-size:20px}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:5px}.wd{text-align:center;font-size:10px;color:var(--muted);font-weight:700;padding:5px 0}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.day{min-height:53px;border-radius:13px;background:#fff;border:1px solid transparent;padding:7px 5px;text-align:left;position:relative;font-size:13px}.day.mutedday{color:#b6b8bd}.day.sel{border:2px solid var(--accent);padding:6px 4px}.day.today{background:var(--accent2)}.dots{display:flex;gap:3px;position:absolute;bottom:6px;left:7px}.dot{width:5px;height:5px;border-radius:50%}.dot.work{background:var(--accent)}.dot.task{background:#2d8f65}.dot.exp{background:var(--red)}
+.daydetail{margin-top:13px}.event{padding:13px 14px;border-radius:15px;background:#fff;border:1px solid var(--line);margin-bottom:8px}.eventtitle{font-weight:800}.pill{font-size:11px;padding:5px 8px;border-radius:999px;background:#f0f1f4;color:#555}
+.listrow{padding:14px 0;border-bottom:1px solid var(--line)}.listrow:last-child{border-bottom:0}
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(620px,100%);padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:rgba(255,255,255,.96);backdrop-filter:blur(18px);border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr 58px 1fr 1fr;gap:4px;z-index:20}
+.navbtn{height:52px;background:transparent;border-radius:15px;color:#747780;-webkit-text-fill-color:#747780;font-size:11px;font-weight:750;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
+.navbtn.active{color:var(--accent);-webkit-text-fill-color:var(--accent);background:#f0efff}.navbtn .ico{font-size:20px;line-height:20px}
+.plus{width:52px;height:52px;border-radius:18px;background:var(--accent);color:#fff;-webkit-text-fill-color:#fff;font-size:29px;margin:auto;box-shadow:0 7px 18px rgba(102,92,246,.35)}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.38);z-index:50;align-items:flex-end}.overlay.show{display:flex}
+.sheet{width:100%;max-width:620px;margin:auto;background:#fff;border-radius:25px 25px 0 0;padding:16px 18px calc(22px + env(safe-area-inset-bottom));max-height:88dvh;overflow:auto}.grab{width:40px;height:4px;border-radius:3px;background:#d8d9de;margin:0 auto 18px}
+.form{display:grid;gap:11px}.field label{display:block;font-size:12px;color:var(--muted);font-weight:700;margin:0 0 5px}.field input,.field select,.field textarea{width:100%;height:48px;border:1px solid var(--line);border-radius:13px;background:#f7f7f9;padding:0 13px;outline:none}.field textarea{height:90px;padding-top:12px;resize:none}.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:4px}
+.quickgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.quick{padding:18px;border:1px solid var(--line);background:#fff;border-radius:18px;text-align:left;font-weight:800}.quick span{display:block;font-size:26px;margin-bottom:8px}
+.toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%) translateY(20px);opacity:0;background:#17181b;color:#fff;padding:12px 16px;border-radius:13px;z-index:80;transition:.2s;pointer-events:none;font-size:13px;white-space:nowrap}.toast.show{opacity:1;transform:translateX(-50%)}
+.empty{text-align:center;padding:28px 10px;color:var(--muted)}.sectiontitle{font-weight:800;margin:17px 0 9px}
+@media(min-width:621px){body{padding:0}.app{box-shadow:0 0 50px rgba(0,0,0,.08)}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="brand">ShiftFlow</div><div class="sub" id="headerSub">Работа • Деньги • Планы</div></header>
+<main id="screen">
+<section id="calendar" class="view active"></section>
+<section id="work" class="view"></section>
+<section id="analytics" class="view"></section>
+<section id="money" class="view"></section>
+<section id="tasks" class="view"></section>
+</main>
+<nav class="nav">
+<button class="navbtn active" data-tab="calendar"><span class="ico">▣</span>Календарь</button>
+<button class="navbtn" data-tab="work"><span class="ico">◷</span>Работа</button>
+<button class="plus" id="plusBtn" aria-label="Добавить">+</button>
+<button class="navbtn" data-tab="money"><span class="ico">₽</span>Деньги</button>
+<button class="navbtn" data-tab="tasks"><span class="ico">✓</span>Задачи</button>
+</nav>
+</div>
+
+<div class="overlay" id="sheet">
+<div class="sheet">
+<div class="grab"></div>
+<div id="sheetContent"></div>
+</div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+const KEY="shiftflow_full_test_2";
+let db=JSON.parse(localStorage.getItem(KEY)||"null")||{
+ employers:[{id:1,name:"Основная работа",rate:650,color:"#665cf6",payType:"hourly",payPeriod:"monthly",payDay:10}],
+ shifts:[
+  {id:1,date:todayISO(),start:"10:00",end:"22:00",break:60,employer:1,status:"planned",income:7150},
+  {id:2,date:addDays(todayISO(),1),start:"10:00",end:"22:00",break:60,employer:1,status:"planned",income:7150}
+ ],
+ expenses:[
+  {id:1,date:todayISO(),amount:450,cat:"Такси",desc:"Поездка домой",shift:1},
+  {id:2,date:todayISO(),amount:700,cat:"Еда",desc:"Обед",shift:1}
+ ],
+ tasks:[{id:1,date:todayISO(),time:"18:00",title:"Оплатить интернет",priority:"Высокий",done:false}],
+ selected:todayISO(),month:new Date().toISOString().slice(0,7)
+};
+let timer=null;
+
+function todayISO(){return new Date().toISOString().slice(0,10)}
+function addDays(s,n){let d=new Date(s+"T12:00:00");d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)}
+function fmtDate(s){let d=new Date(s+"T12:00:00");return d.toLocaleDateString("ru-RU",{day:"numeric",month:"long"})}
+function money(n){return new Intl.NumberFormat("ru-RU").format(Math.round(n))+" ₽"}
+function save(){localStorage.setItem(KEY,JSON.stringify(db))}
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function toast(s){let t=document.getElementById("toast");t.textContent=s;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1600)}
+function closeSheet(){document.getElementById("sheet").classList.remove("show")}
+function openSheet(html){document.getElementById("sheetContent").innerHTML=html;document.getElementById("sheet").classList.add("show")}
+function shiftIncome(s){if(s.income!=null)return s.income;let e=db.employers.find(x=>x.id==s.employer);if(!e)return 0;let h=hours(s.start,s.end,s.break||0);return e.payType==="hourly"?h*e.rate:e.rate}
+function hours(a,b,br=0){let [ah,am]=a.split(":").map(Number),[bh,bm]=b.split(":").map(Number);let x=bh*60+bm-(ah*60+am);if(x<0)x+=1440;return Math.max(0,x-br)/60}
+function monthLabel(m){let [y,mo]=m.split("-").map(Number);return new Date(y,mo-1,1).toLocaleDateString("ru-RU",{month:"long",year:"numeric"})}
+function render(){
+ renderCalendar();renderWork();renderMoney();renderTasks();renderAnalytics();
+}
+function setTab(tab){
+ document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+ document.getElementById(tab).classList.add("active");
+ document.querySelectorAll(".navbtn").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));
+ document.getElementById("screen").scrollTop=0;
+}
+document.querySelectorAll(".navbtn").forEach(b=>b.addEventListener("click",()=>setTab(b.dataset.tab)));
+document.getElementById("plusBtn").addEventListener("click",()=>openQuick());
+
+function renderCalendar(){
+ let m=db.month,y=+m.slice(0,4),mo=+m.slice(5)-1,first=new Date(y,mo,1),start=(first.getDay()+6)%7,days=new Date(y,mo+1,0).getDate();
+ let cells="";for(let i=0;i<start;i++)cells+='<div></div>';
+ for(let d=1;d<=days;d++){let iso=`${y}-${String(mo+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`, cls=iso===db.selected?"day sel":"day";if(iso===todayISO())cls+=" today";
+  let w=db.shifts.some(s=>s.date===iso),t=db.tasks.some(x=>x.date===iso&&!x.done),e=db.expenses.some(x=>x.date===iso);
+  cells+=`<button class="${cls}" data-date="${iso}">${d}<div class="dots">${w?'<i class="dot work"></i>':''}${t?'<i class="dot task"></i>':''}${e?'<i class="dot exp"></i>':''}</div></button>`;
+ }
+ let s=db.selected,sh=db.shifts.filter(x=>x.date===s),ex=db.expenses.filter(x=>x.date===s),ta=db.tasks.filter(x=>x.date===s);
+ let inc=sh.reduce((a,x)=>a+shiftIncome(x),0),spent=ex.reduce((a,x)=>a+x.amount,0);
+ document.getElementById("calendar").innerHTML=`
+ <h1>Календарь</h1>
+ <div class="calendar-head"><button class="iconbtn" id="prevM">‹</button><div class="month">${monthLabel(m)}</div><button class="iconbtn" id="nextM">›</button></div>
+ <div class="week">${["Пн","Вт","Ср","Чт","Пт","Сб","Вс"].map(x=>`<div class="wd">${x}</div>`).join("")}</div>
+ <div class="cal">${cells}</div>
+ <div class="card daydetail">
+  <div class="row"><div><div class="small muted">Выбранный день</div><b style="font-size:18px">${fmtDate(s)}</b></div><button class="btn secondary" id="addDay">+ Добавить</button></div>
+  <div class="grid2" style="margin-top:13px">
+   <div class="metric"><span class="small muted">Доход</span><b class="green">${money(inc)}</b></div>
+   <div class="metric"><span class="small muted">Расходы</span><b class="red">${money(spent)}</b></div>
+  </div>
+  <div class="metric" style="margin-top:10px"><span class="small muted">Итог дня</span><b>${money(inc-spent)}</b></div>
+ </div>
+ ${sh.length?`<div class="sectiontitle">Смены</div>${sh.map(x=>shiftCard(x)).join("")}`:""}
+ ${ta.length?`<div class="sectiontitle">Задачи</div>${ta.map(x=>taskRow(x)).join("")}`:""}
+ ${ex.length?`<div class="sectiontitle">Расходы</div>${ex.map(x=>expenseRow(x)).join("")}`:""}
+ ${!sh.length&&!ta.length&&!ex.length?'<div class="empty">На этот день ничего нет.</div>':''}
+ `;
+ document.querySelectorAll("[data-date]").forEach(b=>b.onclick=()=>{db.selected=b.dataset.date;save();render()});
+ document.getElementById("prevM").onclick=()=>changeMonth(-1);
+ document.getElementById("nextM").onclick=()=>changeMonth(1);
+ document.getElementById("addDay").onclick=()=>openQuick();
+ bindDynamic();
+}
+function changeMonth(n){let d=new Date(db.month+"-01T12:00:00");d.setMonth(d.getMonth()+n);db.month=d.toISOString().slice(0,7);db.selected=db.month+"-01";save();render()}
+function shiftCard(x){
+ let h=hours(x.start,x.end,x.break||0),status=x.status==="completed"?"Завершена":x.status==="started"?"Идёт":"Запланирована";
+ return `<div class="event" data-shift="${x.id}">
+ <div class="row"><div><div class="eventtitle">● Работа</div><div class="muted">${esc(x.start)} — ${esc(x.end)} · ${h.toFixed(1)} ч</div></div><span class="pill">${status}</span></div>
+ <div class="row" style="margin-top:10px"><b class="green">${money(shiftIncome(x))}</b><button class="btn ghost editShift">Открыть</button></div>
+ </div>`;
+}
+function renderWork(){
+ let totalH=db.shifts.reduce((a,s)=>a+hours(s.start,s.end,s.break||0),0),totalI=db.shifts.reduce((a,s)=>a+shiftIncome(s),0);
+ document.getElementById("work").innerHTML=`<h1>Работа</h1>
+ <div class="grid2"><div class="metric"><span class="small muted">Смен</span><b>${db.shifts.length}</b></div><div class="metric"><span class="small muted">Часов</span><b>${totalH.toFixed(1)}</b></div></div>
+ <div class="metric" style="margin-top:10px"><span class="small muted">Заработано по плану</span><b class="green">${money(totalI)}</b></div>
+ <div class="h2">Работодатели</div>
+ ${db.employers.map(e=>`<div class="card"><div class="row"><div><b>${esc(e.name)}</b><div class="small muted">${e.payType==="hourly"?money(e.rate)+"/час":"Фиксированная оплата"} · выплата ${e.payDay||"—"} числа</div></div><span class="pill">${e.payPeriod}</span></div></div>`).join("")}
+ <button class="btn full secondary" id="addEmployer">+ Добавить работодателя</button>
+ <div class="h2">Смены</div>
+ ${db.shifts.slice().sort((a,b)=>b.date.localeCompare(a.date)).map(x=>`<div class="event"><div class="row"><div><b>${fmtDate(x.date)}</b><div class="muted">${x.start} — ${x.end}</div></div><b class="green">${money(shiftIncome(x))}</b></div><div style="margin-top:10px"><button class="btn ghost openShift" data-id="${x.id}">Открыть смену</button></div></div>`).join("")}
+ <div class="h2">График</div><div class="card"><div class="row"><div><b>Ротация</b><div class="small muted">Автоматическое создание будущих смен</div></div><button class="btn secondary" id="rotation">Настроить</button></div></div>`;
+ document.getElementById("addEmployer").onclick=addEmployer;
+ document.getElementById("rotation").onclick=openRotation;
+ document.querySelectorAll(".openShift").forEach(b=>b.onclick=()=>openShift(+b.dataset.id));
+}
+function renderMoney(){
+ let earned=db.shifts.reduce((a,s)=>a+shiftIncome(s),0),spent=db.expenses.reduce((a,e)=>a+e.amount,0),received=db.shifts.filter(s=>s.status==="completed").reduce((a,s)=>a+shiftIncome(s),0);
+ document.getElementById("money").innerHTML=`<h1>Деньги</h1>
+ <div class="grid2"><div class="metric"><span class="small muted">Заработано</span><b class="green">${money(earned)}</b></div><div class="metric"><span class="small muted">Расходы</span><b class="red">${money(spent)}</b></div></div>
+ <div class="grid2" style="margin-top:10px"><div class="metric"><span class="small muted">Получено</span><b>${money(received)}</b></div><div class="metric"><span class="small muted">Осталось</span><b>${money(earned-spent)}</b></div></div>
+ <div class="h2">Операции</div>
+ <button class="btn secondary full" id="addExpense">+ Добавить расход</button>
+ <div style="height:10px"></div>
+ ${db.expenses.slice().sort((a,b)=>b.date.localeCompare(a.date)).map(expenseRow).join("")}
+ <div class="h2">Быстрый ввод</div>
+ <div class="card"><div class="muted small">Напишите или продиктуйте:</div><b>«Потратила 450 рублей на такси»</b><div style="height:10px"></div><button class="btn full" id="parseBtn">Распознать расход</button></div>`;
+ document.getElementById("addExpense").onclick=()=>openExpense();
+ document.getElementById("parseBtn").onclick=()=>openParser();
+}
+function expenseRow(x){return `<div class="event"><div class="row"><div><b>${esc(x.cat)}</b><div class="small muted">${esc(x.desc||"Без описания")} · ${fmtDate(x.date)}</div></div><b class="red">−${money(x.amount)}</b></div><div style="margin-top:9px"><button class="btn ghost editExpense" data-id="${x.id}">Изменить</button></div></div>`}
+function renderTasks(){
+ let open=db.tasks.filter(x=>!x.done).length;
+ document.getElementById("tasks").innerHTML=`<h1>Задачи</h1>
+ <div class="metric"><span class="small muted">Активных задач</span><b>${open}</b></div>
+ <div style="height:10px"></div><button class="btn full secondary" id="addTask">+ Добавить задачу</button>
+ <div class="h2">Список</div>
+ ${db.tasks.slice().sort((a,b)=>a.date.localeCompare(b.date)).map(taskRow).join("")}`;
+ document.getElementById("addTask").onclick=()=>openTask();
+}
+function taskRow(x){return `<div class="event"><div class="row"><div><b style="${x.done?'text-decoration:line-through;color:#999':''}">${esc(x.title)}</b><div class="small muted">${fmtDate(x.date)}${x.time?" · "+x.time:""} · ${esc(x.priority||"Средний")}</div></div><button class="btn ${x.done?'ghost':'secondary'} toggleTask" data-id="${x.id}">${x.done?"Вернуть":"Готово"}</button></div></div>`}
+function renderAnalytics(){
+ let h=db.shifts.reduce((a,s)=>a+hours(s.start,s.end,s.break||0),0),i=db.shifts.reduce((a,s)=>a+shiftIncome(s),0),e=db.expenses.reduce((a,x)=>a+x.amount,0),n=i-e;
+ document.getElementById("analytics").innerHTML=`<h1>Аналитика</h1>
+ <div class="chips"><button class="chip active">Все время</button><button class="chip">Этот месяц</button></div>
+ <div class="grid2"><div class="metric"><span class="small muted">Смены</span><b>${db.shifts.length}</b></div><div class="metric"><span class="small muted">Часы</span><b>${h.toFixed(1)}</b></div></div>
+ <div class="grid2" style="margin-top:10px"><div class="metric"><span class="small muted">Доход</span><b class="green">${money(i)}</b></div><div class="metric"><span class="small muted">Расходы</span><b class="red">${money(e)}</b></div></div>
+ <div class="metric" style="margin-top:10px"><span class="small muted">Чистый доход</span><b>${money(n)}</b></div>
+ <div class="h2">Ключевые показатели</div>
+ <div class="card"><div class="row"><span>Доход / час</span><b>${money(h?i/h:0)}</b></div><div class="row" style="margin-top:14px"><span>Чистый доход / час</span><b>${money(h?n/h:0)}</b></div><div class="row" style="margin-top:14px"><span>Среднее за смену</span><b>${money(db.shifts.length?i/db.shifts.length:0)}</b></div></div>
+ <div class="h2">По работодателям</div>
+ ${db.employers.map(e=>{let ss=db.shifts.filter(s=>s.employer==e.id);return `<div class="card"><div class="row"><b>${esc(e.name)}</b><b class="green">${money(ss.reduce((a,s)=>a+shiftIncome(s),0))}</b></div><div class="small muted" style="margin-top:6px">${ss.length} смен · ${ss.reduce((a,s)=>a+hours(s.start,s.end,s.break||0),0).toFixed(1)} ч</div></div>`}).join("")}`;
+}
+function bindDynamic(){
+ document.querySelectorAll(".editShift").forEach(b=>b.onclick=()=>openShift(+b.closest("[data-shift]").dataset.shift));
+ document.querySelectorAll(".editExpense").forEach(b=>b.onclick=()=>openExpense(+b.dataset.id));
+ document.querySelectorAll(".toggleTask").forEach(b=>b.onclick=()=>{let x=db.tasks.find(t=>t.id==b.dataset.id);x.done=!x.done;save();render()});
+}
+function openQuick(){
+ openSheet(`<h2 style="margin:0 0 14px">Что добавить?</h2><div class="quickgrid">
+ <button class="quick" id="qShift"><span>◷</span>Смена</button><button class="quick" id="qExpense"><span>−₽</span>Расход</button>
+ <button class="quick" id="qIncome"><span>+₽</span>Доход</button><button class="quick" id="qTask"><span>✓</span>Задача</button>
+ </div>`);
+ document.getElementById("qShift").onclick=()=>openShift();
+ document.getElementById("qExpense").onclick=()=>openExpense();
+ document.getElementById("qIncome").onclick=()=>openIncome();
+ document.getElementById("qTask").onclick=()=>openTask();
+}
+function openShift(id){
+ let x=id?db.shifts.find(s=>s.id==id):null;
+ openSheet(`<h2 style="margin:0 0 14px">${x?"Смена":"Новая смена"}</h2>
+ <div class="form">
+ <div class="field"><label>Дата</label><input id="fDate" type="date" value="${x?.date||db.selected}"></div>
+ <div class="field"><label>Работодатель</label><select id="fEmp">${db.employers.map(e=>`<option value="${e.id}" ${x?.employer==e.id?"selected":""}>${esc(e.name)}</option>`).join("")}</select></div>
+ <div class="grid2"><div class="field"><label>Начало</label><input id="fStart" type="time" value="${x?.start||"10:00"}"></div><div class="field"><label>Конец</label><input id="fEnd" type="time" value="${x?.end||"22:00"}"></div></div>
+ <div class="field"><label>Перерыв, минут</label><input id="fBreak" type="number" value="${x?.break??60}"></div>
+ <div class="actions"><button class="btn ghost" id="cancel">Отмена</button><button class="btn" id="saveShift">Сохранить</button></div>
+ ${x?`<button class="btn danger full" id="deleteShift" style="margin-top:9px">Удалить смену</button>`:""}
+ </div>`);
+ document.getElementById("cancel").onclick=closeSheet;
+ document.getElementById("saveShift").onclick=()=>{
+  let obj={id:x?.id||Date.now(),date:fDate.value,start:fStart.value,end:fEnd.value,break:+fBreak.value||0,employer:+fEmp.value,status:x?.status||"planned"};
+  obj.income=shiftIncome({...obj,income:null}); if(x){let i=db.shifts.findIndex(s=>s.id==x.id);db.shifts[i]=obj}else db.shifts.push(obj);
+  db.selected=obj.date;db.month=obj.date.slice(0,7);save();closeSheet();render();toast("Смена сохранена");
+ };
+ if(x)document.getElementById("deleteShift").onclick=()=>{db.shifts=db.shifts.filter(s=>s.id!==x.id);save();closeSheet();render();toast("Смена удалена")};
+}
+function openExpense(id){
+ let x=id?db.expenses.find(e=>e.id==id):null;
+ openSheet(`<h2 style="margin:0 0 14px">${x?"Расход":"Новый расход"}</h2><div class="form">
+ <div class="field"><label>Сумма</label><input id="eAmount" type="number" inputmode="decimal" value="${x?.amount||""}" placeholder="450"></div>
+ <div class="field"><label>Категория</label><select id="eCat">${["Еда","Такси","Транспорт","Покупки","Жилье","Связь","Развлечения","Здоровье","Другое"].map(c=>`<option ${x?.cat===c?"selected":""}>${c}</option>`).join("")}</select></div>
+ <div class="field"><label>Описание</label><input id="eDesc" value="${esc(x?.desc||"")}"></div>
+ <div class="field"><label>Дата</label><input id="eDate" type="date" value="${x?.date||db.selected}"></div>
+ <div class="actions"><button class="btn ghost" id="cancel">Отмена</button><button class="btn" id="saveExp">Сохранить</button></div>
+ ${x?`<button class="btn danger full" id="deleteExp" style="margin-top:9px">Удалить расход</button>`:""}</div>`);
+ document.getElementById("cancel").onclick=closeSheet;
+ document.getElementById("saveExp").onclick=()=>{let obj={id:x?.id||Date.now(),amount:+eAmount.value||0,cat:eCat.value,desc:eDesc.value,date:eDate.value,shift:x?.shift||null};if(!obj.amount){toast("Введите сумму");return}if(x)db.expenses[db.expenses.findIndex(a=>a.id==x.id)]=obj;else db.expenses.push(obj);db.selected=obj.date;save();closeSheet();render();toast("Расход сохранён")};
+ if(x)document.getElementById("deleteExp").onclick=()=>{db.expenses=db.expenses.filter(e=>e.id!==x.id);save();closeSheet();render();toast("Расход удалён")};
+}
+function openParser(){
+ openSheet(`<h2 style="margin:0 0 8px">Быстрый расход</h2><div class="muted small" style="margin-bottom:12px">Например: «Потратила 450 рублей на такси»</div>
+ <div class="field"><label>Фраза</label><textarea id="phrase" placeholder="Потратила 450 рублей на такси"></textarea></div><button class="btn full" id="parse">Распознать</button><div id="parsed" style="margin-top:12px"></div>`);
+ document.getElementById("parse").onclick=()=>{
+  let s=phrase.value, m=s.match(/([0-9]+(?:[.,][0-9]+)?)/),amount=m?+m[1].replace(",","."):0;
+  let low=s.toLowerCase(),cat=low.includes("такси")?"Такси":low.includes("коф")||low.includes("обед")||low.includes("ед")?"Еда":low.includes("продукт")?"Покупки":low.includes("бенз")?"Транспорт":"Другое";
+  if(!amount){document.getElementById("parsed").innerHTML='<div class="card">Не удалось найти сумму.</div>';return}
+  document.getElementById("parsed").innerHTML=`<div class="card"><div class="row"><div><b>−${money(amount)}</b><div class="small muted">${cat}</div></div><button class="btn" id="confirm">Добавить</button></div></div>`;
+  document.getElementById("confirm").onclick=()=>{db.expenses.push({id:Date.now(),amount,cat,desc:s,date:db.selected});save();closeSheet();render();toast("Расход добавлен")};
+ };
+}
+function openIncome(){
+ openSheet(`<h2 style="margin:0 0 14px">Новый доход</h2><div class="form"><div class="field"><label>Сумма</label><input id="iAmount" type="number" inputmode="decimal" placeholder="5000"></div><div class="field"><label>Источник</label><input id="iSource" placeholder="Подработка"></div><div class="field"><label>Дата</label><input id="iDate" type="date" value="${db.selected}"></div><button class="btn full" id="saveIncome">Сохранить</button></div>`);
+ document.getElementById("saveIncome").onclick=()=>{let amount=+iAmount.value||0;if(!amount)return toast("Введите сумму");db.incomes=db.incomes||[];db.incomes.push({id:Date.now(),amount,source:iSource.value,date:iDate.value});save();closeSheet();toast("Доход добавлен")};
+}
+function openTask(){
+ openSheet(`<h2 style="margin:0 0 14px">Новая задача</h2><div class="form"><div class="field"><label>Название</label><input id="tTitle" placeholder="Что нужно сделать?"></div><div class="grid2"><div class="field"><label>Дата</label><input id="tDate" type="date" value="${db.selected}"></div><div class="field"><label>Время</label><input id="tTime" type="time"></div></div><div class="field"><label>Приоритет</label><select id="tPriority"><option>Низкий</option><option selected>Средний</option><option>Высокий</option></select></div><button class="btn full" id="saveTask">Сохранить</button></div>`);
+ document.getElementById("saveTask").onclick=()=>{if(!tTitle.value.trim())return toast("Введите задачу");db.tasks.push({id:Date.now(),title:tTitle.value.trim(),date:tDate.value,time:tTime.value,priority:tPriority.value,done:false});save();closeSheet();render();toast("Задача добавлена")};
+}
+function addEmployer(){
+ openSheet(`<h2 style="margin:0 0 14px">Новый работодатель</h2><div class="form"><div class="field"><label>Название</label><input id="emName" placeholder="Например, Кофейня"></div><div class="field"><label>Тип оплаты</label><select id="emType"><option value="hourly">Почасовая</option><option value="shift">За смену</option></select></div><div class="field"><label>Ставка</label><input id="emRate" type="number" inputmode="decimal" placeholder="650"></div><div class="field"><label>Период выплаты</label><select id="emPeriod"><option>weekly</option><option>biweekly</option><option selected>monthly</option></select></div><div class="field"><label>День выплаты</label><input id="emDay" type="number" min="1" max="31" value="10"></div><button class="btn full" id="saveEmployer">Сохранить</button></div>`);
+ document.getElementById("saveEmployer").onclick=()=>{if(!emName.value.trim())return toast("Введите название");db.employers.push({id:Date.now(),name:emName.value.trim(),rate:+emRate.value||0,payType:emType.value,payPeriod:emPeriod.value,payDay:+emDay.value||10});save();closeSheet();render();toast("Работодатель добавлен")};
+}
+function openRotation(){
+ openSheet(`<h2 style="margin:0 0 14px">График смен</h2><div class="form"><div class="field"><label>Цикл</label><select id="rot"><option value="2/2">2/2</option><option value="3/3">3/3</option><option value="5/2">5/2</option></select></div><div class="field"><label>Дата старта</label><input id="rDate" type="date" value="${db.selected}"></div><div class="grid2"><div class="field"><label>Начало</label><input id="rStart" type="time" value="10:00"></div><div class="field"><label>Конец</label><input id="rEnd" type="time" value="22:00"></div></div><div class="field"><label>На сколько дней вперёд</label><select id="rDays"><option value="30">30</option><option value="90" selected>90</option><option value="180">180</option></select></div><button class="btn full" id="generate">Создать смены</button></div>`);
+ document.getElementById("generate").onclick=()=>{let pat=rot.value.split("/").map(Number),on=pat[0],off=pat[1],total=on+off,start=new Date(rDate.value+"T12:00:00");for(let i=0;i<+rDays.value;i++){let d=new Date(start);d.setDate(d.getDate()+i);if(i%total<on){let iso=d.toISOString().slice(0,10);if(!db.shifts.some(s=>s.date===iso&&s.start===rStart.value)){let emp=db.employers[0];db.shifts.push({id:Date.now()+i,date:iso,start:rStart.value,end:rEnd.value,break:60,employer:emp?.id||1,status:"planned",income:null})}}}save();closeSheet();render();toast("График создан")};
+}
+document.getElementById("sheet").addEventListener("click",e=>{if(e.target.id==="sheet")closeSheet()});
+render();
+})();
+</script>
+<script>
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body>
+</html>
