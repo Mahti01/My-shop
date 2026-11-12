@@ -246,7 +246,7 @@ function processCustomer(c,dt){
   }else if(c.state==='pay'){
     if(c.wait>1.5/staffSpeed('cashier')){
       const total=c.cart.reduce((a,i)=>a+effectivePrice(i),0);
-      s.money+=total;s.dayRevenue+=total;s.daySales++;s.sales++;s.avgCheck=s.daySales?Math.round(s.dayRevenue/s.daySales):0;
+      s.money+=total;s.dayRevenue+=total;s.daySales++;s.sales++;s.playerXP=Math.min(7200,Number(s.playerXP||0)+8);s.avgCheck=s.daySales?Math.round(s.dayRevenue/s.daySales):0;
       c.satisfaction=Math.max(0,c.satisfaction-(s.cleanliness<70?8:0));
       if(c.satisfaction<55){s.complaints++;s.reputation=Math.max(1,s.reputation-.03)}
       s.salesByProduct.forEach(()=>{});c.cart.forEach(i=>s.salesByProduct[i]++);
