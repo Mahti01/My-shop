@@ -1,0 +1,9 @@
+{
+  "name": "Мой Магазин",
+  "short_name": "Мой Магазин",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#efe2d0",
+  "theme_color": "#4d3a2f",
+  "lang": "ru"
+}
