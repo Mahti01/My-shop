@@ -85,6 +85,12 @@ s.city=Object.assign({location:'center',unlockedLocations:['center'],secondStore
 s.city.unlockedLocations=Array.isArray(s.city.unlockedLocations)?s.city.unlockedLocations:['center'];
 s.city.competitors=Array.isArray(s.city.competitors)?s.city.competitors:[];
 s.placed=Array.isArray(s.placed)?s.placed:[];if(!s.placed.length)s.placed=[{id:'checkout-main',type:'checkout',x:575,y:330}];
+s.staffState=Object.assign({cashier:{x:615,y:330,tx:615,ty:330,task:'Обслуживает кассу',timer:0},seller:{x:730,y:380,tx:730,ty:380,task:'Готов',timer:0},cleaner:{x:90,y:380,tx:90,ty:380,task:'Не нанят',timer:0}},s.staffState||{});
+s.staffState.cashier=Object.assign({x:615,y:330,tx:615,ty:330,task:'Обслуживает кассу',timer:0},s.staffState.cashier||{});
+s.staffState.seller=Object.assign({x:730,y:380,tx:730,ty:380,task:'Готов',timer:0},s.staffState.seller||{});
+s.staffState.cleaner=Object.assign({x:90,y:380,tx:90,ty:380,task:'Не нанят',timer:0},s.staffState.cleaner||{});
+resetCamera();
+
 function load(){try{const old=JSON.parse(localStorage.getItem('myshop_v47')||localStorage.getItem('myshop_v46')||localStorage.getItem('myshop_v45')||localStorage.getItem('myshop_v44')||localStorage.getItem('myshop_v43')||localStorage.getItem('myshop_v42')||localStorage.getItem('myshop_v41')||localStorage.getItem('myshop_v40')||localStorage.getItem('myshop_v39')||localStorage.getItem('myshop_v38')||localStorage.getItem('myshop_v37')||localStorage.getItem('myshop_v36')||localStorage.getItem('myshop_v35')||localStorage.getItem('myshop_v34')||localStorage.getItem('myshop_v32')||localStorage.getItem('myshop_v31')||localStorage.getItem('myshop_v30')||localStorage.getItem('myshop_v29')||localStorage.getItem('myshop_v28')||localStorage.getItem('myshop_v25')||localStorage.getItem('myshop_v23')||'null');const x=Object.assign({},defaults,old||{});x.staff=Object.assign({},defaults.staff,old?.staff||{});x.staffXP=Object.assign({},defaults.staffXP,old?.staffXP||{});x.staffSalary=Object.assign({},defaults.staffSalary,old?.staffSalary||{});x.shopUpgrades=Object.assign({},defaults.shopUpgrades,old?.shopUpgrades||{});x.cleanliness=Number(old?.cleanliness??92);x.staffState=Object.assign({},defaults.staffState,old?.staffState||{});
 x.staffState.cashier=Object.assign({},defaults.staffState.cashier,old?.staffState?.cashier||{});
 x.staffState.seller=Object.assign({},defaults.staffState.seller,old?.staffState?.seller||{});
